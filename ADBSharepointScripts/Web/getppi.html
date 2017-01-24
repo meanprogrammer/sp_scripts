@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/4.1.0/css/fabric.min.css">
+<script language="Javascript" src="/sites/sandbox/o365implem/itreforms/o365implem/Style Library/jquery-3.1.1.min.js"></script>
+<script language="Javascript">
+$(document).ready(function() {
+    getProjectPerformance();
+	
+	function getProjectPerformance()  {  
+		var siteurl = _spPageContextInfo.webAbsoluteUrl;
+		//var queryParams = new URLSearchParams(window.location.search);
+		//var id ="";
+		//if (queryParams.has('id')) id = queryParams.get('id');
+		var id = getUrlParameter("id");
+		$.ajax({
+		    url: siteurl + "/_api/web/lists/getbytitle('Project Performance')/items(" + id + ")",
+			method: "GET",
+			headers: { "Accept": "application/json; odata=verbose" },
+			success: function (data) {
+     			//$('#adbDataTitle').html(data.d.Title);
+     			//$('#adbDataStartTime').html(data.d.EventDate);
+     			//$('#adbDataEndTime').html(data.d.EndDate);
+     			//$('#adbDataParticipants').html(data.d.ParticipantsPicker);
+     			//$('#adbDataCategory').html(data.d.Category);
+				//$("#adbDataError").hide();
+			},
+			error: function (error) {
+				//$("#adbDataError").html("No data found.");
+				//$("#adbData").hide();
+			}
+		});
+	}
+	
+	function getUrlParameter(name) {
+		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+		var results = regex.exec(location.search);
+		return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+	};	
+	
+	function successHandler() {
+		var dataArray = data.d.results;
+     	console.log(data.d.Title);
+	}
+	
+	function errorHandler() {
+		alert('failed');
+	}
+		
+});
+</script>
+<div class="ms-Grid-row ms-Grid">
+     <div class="ms-Grid-col ms-u-sm6 ms-u-md6 ms-u-lg12">
+     <div id="adbDataError" class="ms-font-l"></div>
+     <div id="adbData" class="ms-Table ms-font-l">
+  		<div class="ms-Table-row">
+		    <span class="ms-Table-rowCheck">Title:</span>
+		    <span id="adbDataTitle" class="ms-Table-cell"></span> 
+		</div>
+  		<div class="ms-Table-row">
+		    <span class="ms-Table-rowCheck">Category:</span>
+		    <span id="adbDataCategory" class="ms-Table-cell"></span> 
+		</div>
+  		<div class="ms-Table-row">
+		    <span class="ms-Table-rowCheck">Start Time:</span>
+		    <span id="adbDataStartTime" class="ms-Table-cell"></span> 
+		</div>
+  		<div class="ms-Table-row">
+		    <span class="ms-Table-rowCheck">End Time:</span>
+		    <span id="adbDataEndTime" class="ms-Table-cell"></span> 
+		</div>
+  		<div class="ms-Table-row">
+		    <span class="ms-Table-rowCheck">Participants:</span>
+		    <span id="adbDataParticipants" class="ms-Table-cell"></span> 
+		</div>
+	</div>  
+ </div>    
